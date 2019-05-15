@@ -1,0 +1,232 @@
+$primary-colour: #F2AF29;
+$secondary-colour: #8E2B33;
+$dark-colour: #474747;
+$light-colour: #E0E0CE;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.grid-container {
+    height: 100vh;
+    display: grid;
+    grid-gap: 0px 0px;
+    grid-template-rows: 36% 25% 20% 19%;
+    grid-template-columns: 26% 26% 22% 14% 12%;
+    .grid-item {
+        //background-color: $primary-colour;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+    .col1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+    .col2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    .col3 {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+    .col4 {
+        grid-column-start: 4;
+        grid-column-end: 4;
+    }
+    .col5 {
+        grid-column-start: 5;
+        grid-column-end: 5;
+    }
+} 
+.bk-primary {
+    background-color: $primary-colour;
+}
+.bk-secondary {
+    background-color: $secondary-colour;
+}
+.bk-dark {
+    background-color: $dark-colour;
+}
+.bk-light {
+    background-color: $light-colour;
+}
+.bk-white {
+    background-color: white;
+}
+
+.home-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 7px;
+    font-size: 20px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white
+}
+.btn-secondary:hover {
+    color: $secondary-colour;
+}
+.btn:hover {
+    background-color: white;
+    color: $primary-colour;
+}
+
+.unlink {
+    text-decoration: none;
+    color: white;
+}
+.space-between {
+    margin: 0 6px;
+}
+
+.horizontal {
+    display: flex;
+    div {
+        text-align: center;
+        margin-left: 15px;
+        h3 {
+            margin: auto 0 0;
+            font-size: 16px;
+        }
+        p {
+            margin-top: 5px;
+            margin-bottom: auto;
+        }
+    }
+}
+
+.vertical {
+    text-align: center;
+    h3 {
+        margin: 10px 0 0;
+        font-size: 16px;
+    }
+    p {
+        margin-top: 5px;
+        //margin-bottom: auto;
+    }
+}
+
+.header {
+    align-items: center;
+    display: grid;
+    width: 100%;
+    height: 60px;
+    background-color: $dark-colour;
+    .header-title {
+        color: $primary-colour;
+        margin: 0 7px;
+        font-size: 38px;
+    }
+    .header-button {
+        justify-self: center;
+        height: 22px;
+        margin: 0 7px;
+        background-color: $dark-colour;
+        border-color: $primary-colour;
+        color: $primary-colour;
+        font-size: 20px;
+    }
+    .header-button:hover {
+        background-color: $primary-colour;
+        color: white;
+    }
+}
+.header-game {
+    grid-template-columns: auto min-content min-content;
+}
+.header-about {
+    grid-template-columns: auto min-content min-content min-content min-content;
+}
+
+.light-background {
+    background-color: $light-colour;
+}
+
+.pannel {
+    background-color: $primary-colour;
+    border-radius: 7px;
+    display: grid;
+    grid-template-rows: min-content auto;
+    .pannel-accentbar {
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+        height: 23px;
+    }
+    .pannel-body {
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: $secondary-colour;
+    }
+}
+
+.pannel-create {
+    width: 400px;
+    height: 350px;
+    margin-right: 250px;
+}
+.pannel-join {
+    width: 300px;
+    height: 250px;
+}
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+}
+.noscroll {
+    overflow: hidden;
+}
+.btn-secondary-primary {
+    border-color: $secondary-colour;
+    color: $secondary-colour;
+}
+.btn-secondary-primary:hover {
+    background-color: $secondary-colour;
+    color: white;
+}
+.textinput {
+    background-color: transparent;
+    border-width: 0px;
+    border-bottom: 1px solid $dark-colour;
+    font-size: 16px;
+    color: $dark-colour;
+}
+.textinput:focus {
+    outline: none;
+}
+.cl-dark {
+    color: $dark-colour;
+}
+
+.selectinput {
+    background-color: transparent;
+    border-width: 0;
+    color: $dark-colour;
+    outline: none;
+    font-size: 17px;
+}
+
+.space-props {
+    margin-bottom: 15px;
+}
