@@ -229,6 +229,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.cl-secondary {
   color: #8E2B33;
 }
 
@@ -296,5 +299,132 @@ body {
 
 .space-props {
   margin-bottom: 15px;
+}
+
+.game-background {
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 350px auto;
+      grid-template-columns: 350px auto;
+}
+
+.sideBar {
+  margin: 20px 0 20px 20px;
+  border-right: 2px solid #474747;
+  padding-right: 20px;
+}
+
+.btm-spacer {
+  margin-bottom: 20px;
+}
+
+.table-board {
+  color: #474747;
+  border-collapse: collapse;
+  /*.table-right {
+        border-right: 1px solid transparent;
+    }*/
+}
+
+.table-board td {
+  border-bottom: 1px solid #474747;
+  border-right: 1px solid #474747;
+  padding: 10px;
+}
+
+.table-board td:last-child {
+  border-right: 1px solid transparent;
+}
+
+.table-board tr:last-child td {
+  border-bottom: 1px solid transparent;
+}
+
+.gameView {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.keyView {
+  font-size: 30px;
+  padding: 7px;
+  border: 1px solid #8E2B33;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: #8E2B33;
+}
+
+.keyCopy {
+  font-size: 30px;
+  color: #F2AF29;
+  background-color: #8E2B33;
+  padding: 7px;
+  border: 1px solid #8E2B33;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  font-size: 0.5em;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.start-btn {
+  margin-top: 20px;
+  padding: 5px;
+  border: 1px solid #8E2B33;
+  border-radius: 5px;
+  font-size: 2em;
+  color: #8E2B33;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background-color: #8E2B33;
+  color: #F2AF29;
 }
 /*# sourceMappingURL=main.css.map */

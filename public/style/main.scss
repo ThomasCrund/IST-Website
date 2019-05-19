@@ -2,6 +2,8 @@ $primary-colour: #F2AF29;
 $secondary-colour: #8E2B33;
 $dark-colour: #474747;
 $light-colour: #E0E0CE;
+$player3-colour: #000080;
+$player4-colour: #1d5712;
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
@@ -175,8 +177,11 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        color: $secondary-colour;
+        //color: $secondary-colour;
     }
+}
+.cl-secondary {
+    color: $secondary-colour;
 }
 
 .pannel-create {
@@ -229,4 +234,113 @@ body {
 
 .space-props {
     margin-bottom: 15px;
+}
+
+.game-background {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 350px auto;
+}
+.sideBar {
+    margin: 20px 0 20px 20px;
+    border-right: 2px solid $dark-colour;
+    padding-right: 20px;
+}
+
+.btm-spacer {
+    margin-bottom: 20px;
+}
+.table-board {
+    color: $dark-colour;
+    border-collapse: collapse;
+    td {
+        border-bottom: 1px solid $dark-colour;
+        border-right: 1px solid $dark-colour;
+        padding: 10px;
+    }
+    td:last-child {
+        border-right: 1px solid transparent;
+    }
+    /*.table-right {
+        border-right: 1px solid transparent;
+    }*/
+    tr:last-child td {
+        border-bottom: 1px solid transparent;
+    }
+    
+}
+.gameView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.keyView {
+    font-size: 30px;
+    padding: 7px;
+    border: 1px solid $secondary-colour;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: $secondary-colour;
+}
+.keyCopy {
+    font-size: 30px;
+    color: $primary-colour;
+    background-color: $secondary-colour;
+    padding: 7px;
+    border: 1px solid $secondary-colour;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.5em;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.start-btn {
+    margin-top: 20px;
+    padding: 5px;
+    border: 1px solid $secondary-colour;
+    border-radius: 5px;
+    font-size: 2em;
+    color: $secondary-colour;
+    cursor: pointer;
+}
+.start-btn:hover {
+    background-color: $secondary-colour;
+    color: $primary-colour;
 }

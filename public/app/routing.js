@@ -11,5 +11,9 @@ app.config(function($routeProvider) {
     .when("/game", {
         templateUrl : "./pages/joinGame.html",
         controller : 'joinGameCnrl'
-    });
+    })
+    .when("/game/:gameKey", {
+        templateUrl : "./pages/game.html",
+        controller : 'gameController'
+    })
 });

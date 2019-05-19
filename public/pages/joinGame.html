@@ -8,15 +8,15 @@
         <!--<div class="flex-item">-->
             <div class="pannel pannel-create">
                 <div class="bk-dark pannel-accentbar"></div>
-                <div class="pannel-body">
+                <div class="pannel-body cl-secondary">
                     <h2 style="margin-bottom: 30px;margin-top: 0;">Create Game</h2>
                     <div class="horizontal cl-dark space-props" >
                         <span style="font-size:18px;">Game Name:&nbsp;</span>
-                        <input style="width: 65px;" class="textinput" type="text">
+                        <input ng-model="gameName" style="width: 65px;" class="textinput" type="text">
                     </div>
                     <div class="horizontal cl-dark space-props" >
                         <span style="font-size:18px;">Shape Size:&nbsp;</span>
-                        <select name="" id="" class="selectinput">
+                        <select ng-model="shapeSize" name="" id="" class="selectinput">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="horizontal cl-dark space-props" >
                         <span style="font-size:18px;">Board Size:&nbsp;</span>
-                        <select name="" id="" class="selectinput">
+                        <select ng-model="BoardSize" name="" id="" class="selectinput">
                             <option value="5">5</option>
                             <option value="6">6</option>
                             <option value="7">7</option>
@@ -40,26 +40,26 @@
                             <option value="20">20</option>
                         </select>
                     </div>
-                    <div class="horizontal cl-dark space-props" >
+                    <!--<div class="horizontal cl-dark space-props" >
                         <span style="font-size:18px;">Mode:&nbsp;</span>
-                        <select name="" id="" class="selectinput">
+                        <select ng-model="BoardSize" name="" id="" class="selectinput">
                             <option selected value="1">Classic</option>
                             <option value="2">First to 10</option>
                             <option value="3">Action</option>
                         </select>
-                    </div>
-                    <div class="btn btn-secondary-primary">Create</div>
+                    </div>-->
+                    <div ng-click="createGame()" class="btn btn-secondary-primary">Create</div>
                 </div>
             </div>
             <div class="pannel pannel-join">
                 <div class="bk-secondary pannel-accentbar"></div>
-                <div class="pannel-body">
+                <div class="pannel-body cl-secondary">
                     <h2 style="margin-bottom: 30px;margin-top: 0;">Join Game</h2>
                     <div class="horizontal cl-dark" >
                         <span style="font-size:18px;">Key:&nbsp;</span>
-                        <input style="width: 65px;" class="textinput" type="text">
+                        <input ng-model="joinGameKey" style="width: 65px;" class="textinput" type="text">
                     </div>
-                    <div style="margin-top:20px;" class="btn btn-secondary-primary">Join</div>
+                    <div ng-click="joinGame()" style="margin-top:20px;" class="btn btn-secondary-primary">Join</div>
                 </div>
             </div>
         <!--</div>-->
