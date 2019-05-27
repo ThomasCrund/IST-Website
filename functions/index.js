@@ -107,7 +107,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
                             if (err !== null) {
                                 response.send("Set:Error:" + err);
                             } else {
-                                response.send({ 'id': 0, 'key': playerKey});                    
+                                response.send({ 'id': 0, 'key': playerKey, 'name': name});                    
                             }
                         })
                     } else {
@@ -117,7 +117,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
                             if (err !== null) {
                                 response.send("Set:Error:" + err);
                             } else {
-                                response.send({ 'id': numOfPlayers, 'key': playerKey});                    
+                                response.send({ 'id': numOfPlayers, 'key': playerKey, 'name': name});                    
                             }
                         })
                     }

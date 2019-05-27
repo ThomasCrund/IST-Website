@@ -57,7 +57,7 @@
                     <h2 style="margin-bottom: 30px;margin-top: 0;">Join Game</h2>
                     <div class="horizontal cl-dark" >
                         <span style="font-size:18px;">Key:&nbsp;</span>
-                        <input ng-model="joinGameKey" style="width: 65px;" class="textinput" type="text">
+                        <input ng-enter="joinGame()" ng-model="joinGameKey" style="width: 65px;" class="textinput" type="text">
                     </div>
                     <div ng-click="joinGame()" style="margin-top:20px;" class="btn btn-secondary-primary">Join</div>
                 </div>

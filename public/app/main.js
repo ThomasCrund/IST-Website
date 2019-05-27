@@ -1,5 +1,5 @@
 
-var app = angular.module('myApp', ["ngRoute", "firebase"]);
+var app = angular.module('myApp', ["ngRoute", "firebase", 'ngCookies']);
 app.config(function() {
   var config = {
     apiKey: "AIzaSyB9y7NQAy0ajewlsY80jUgZwp-Ru4IoSc0",
@@ -11,6 +11,22 @@ app.config(function() {
     appId: "1:99302109128:web:c566164887e081ae"
   };
   firebase.initializeApp(config);
+});
+
+AOS.init();
+
+app.directive('ngEnter', function () {
+  return function (scope, element, attrs) {
+      element.bind("keydown keypress", function (event) {
+          if (event.which === 13) {
+              scope.$apply(function () {
+                  scope.$eval(attrs.ngEnter);
+              });
+
+              event.preventDefault();
+          }
+      });
+  };
 });
 
 app.controller('mainCnrl', function($scope) {
@@ -30,19 +46,20 @@ app.controller('joinGameCnrl', function($scope, $http) {
 
   $scope.joinGame = () => {
     if ($scope.joinGameKey !== undefined) {
-      location.replace("#!game/" + $scope.joinGameKey);
+      location.assign("#!game/" + $scope.joinGameKey);
     }
   }
 
   $scope.createGame = () => {
     $http.get("https://us-central1-connex-a8ef2.cloudfunctions.net/createGame?name=hi&block=4&board=8")
     .then((response) => {
-      location.replace("#!game/" + response.data);
+      location.assign("#!game/" + response.data);
+      //location.href = "#!game/" + response.data;
     })
   }
 });
 
-app.controller('gameController', ["$scope", "$firebaseArray","$routeParams","$http", function($scope, $firebaseArray, $routeParams, $http) {
+app.controller('gameController', ["$scope", "$firebaseArray","$routeParams","$http","$cookies", function($scope, $firebaseArray, $routeParams, $http, $cookies) {
   var gameKey = $routeParams.gameKey;
   $scope.gameKey = gameKey;
   document.getElementById("body").style.overflow = "hidden";
@@ -54,69 +71,91 @@ app.controller('gameController', ["$scope", "$firebaseArray","$routeParams","$ht
   var Spectator = false;
   $scope.copied = false;
   console.log($scope.board);
-  $http.get("https://us-central1-connex-a8ef2.cloudfunctions.net/joinGame?key="+gameKey+"&name=Thomas")
-  .then(function(response) {
-    if(response.data === "Game does not exist") {
-      location.replace("#!game");
+  if ($cookies.get('oldName') !== undefined) {
+    $scope.playerName = $cookies.get('oldName');
+  }
+
+  $scope.joinGame = () => {
+    console.log($scope.playerName);
+    if ($scope.playerName ===  undefined) {
+      alert("Please Provide Name");
     } else {
-      var ref = firebase.database().ref().child("Games/" + gameKey + "/Board");
-      Board = $firebaseArray(ref);
-      $scope.board = Board;
-      $scope.playerKey = response.data;
-      var players;
-      //$scope.board = board;
-      console.log(response.data);
-      console.log(response.data.id);
-      firebase.database().ref().child("Games/" + gameKey + "/Players/" + response.data.id + "/test").on('value', (snapshot) => {
-        console.log("on called");
-        console.log(snapshot.val());
-        if (snapshot.val() == true) {
-          console.log("Player Checked");
-          firebase.database().ref().child("Games/" + gameKey + "/Players/" + response.data.id + "/testReply").set(true, (err) => {
-            if (err !== null) {
-              console.error(err);
+      $cookies.put('oldName', $scope.playerName);
+      $scope.joined = true;
+      $http.get("https://us-central1-connex-a8ef2.cloudfunctions.net/joinGame?key="+gameKey+"&name="+$scope.playerName)
+      .then(function(response) {
+        if(response.data === "Game does not exist") {
+          location.replace("#!game");
+        } else {
+          var boardRef = firebase.database().ref().child("Games/" + gameKey + "/Board");
+          Board = $firebaseArray(boardRef);
+          $scope.board = Board;
+
+          var playerRef = firebase.database().ref().child("Games/" + gameKey + "/Players");
+          players = $firebaseArray(playerRef);
+          $scope.players = players;
+          
+          $scope.playerKey = response.data;
+          var players;
+          //$scope.board = board;
+          console.log(response.data);
+          console.log(response.data.id);
+          firebase.database().ref().child("Games/" + gameKey + "/Players/" + response.data.id + "/test").on('value', (snapshot) => {
+            console.log("on called");
+            console.log(snapshot.val());
+            if (snapshot.val() == true) {
+              console.log("Player Checked");
+              firebase.database().ref().child("Games/" + gameKey + "/Players/" + response.data.id + "/testReply").set(true, (err) => {
+                if (err !== null) {
+                  console.error(err);
+                }
+              });
+              
+            }
+          });
+          firebase.database().ref().child("Games/" + gameKey + "/GameStarted").on('value', (snapshot) => {
+            console.log("on called for started");
+            console.log(snapshot.val());
+            if (snapshot.val() == true) {
+              GameStarted = true;
+              $scope.GameStarted = true;
+              console.log('Game Started');
+              console.log(response.data.key);
+              firebase.database().ref().child("Games/" + gameKey + "/Players").once('value', (snapshot) => {
+                players = snapshot.val();
+                var exist = false;
+                for (let i = 0; i < players.length; i++) {
+                  if (players[i].Key === response.data.key) {
+                    Id = i;
+                    $scope.id = i;
+                    exist = true;
+                    console.log("Id: " + Id);
+                    console.log('exists');
+                  }      
+                }
+                if (exist === false) {
+                  Spectator = true;
+                  alert("There is too many players you are a spectator");
+                }  
+                console.log(snapshot.val());
+              });
+            }
+          });
+          firebase.database().ref().child("Games/" + gameKey + "/currentTurn").on('value', (snapshot) => {
+            if (snapshot.val() !== null) {
+              CurrentTurn = snapshot.val();
+              $scope.CurrentTurn = CurrentTurn;
             }
           });
           
         }
-      });
-      firebase.database().ref().child("Games/" + gameKey + "/GameStarted").on('value', (snapshot) => {
-        console.log("on called for started");
-        console.log(snapshot.val());
-        if (snapshot.val() == true) {
-          GameStarted = true;
-          $scope.GameStarted = true;
-          console.log('Game Started');
-          console.log(response.data.key);
-          firebase.database().ref().child("Games/" + gameKey + "/Players").once('value', (snapshot) => {
-            players = snapshot.val();
-            var exist = false;
-            for (let i = 0; i < players.length; i++) {
-              if (players[i].Key === response.data.key) {
-                Id = i;
-                exist = true;
-                console.log("Id: " + Id);
-                console.log('exists');
-              }      
-            }
-            if (exist === false) {
-              Spectator = true;
-              alert("There is too many players you are a spectator");
-            }  
-            console.log(snapshot.val());
-          });
-        }
-      });
-      firebase.database().ref().child("Games/" + gameKey + "/currentTurn").on('value', (snapshot) => {
-        if (snapshot.val() !== null) {
-          CurrentTurn = snapshot.val();
-        }
+      }, (err) => {
+        alert("Error: " + err.data);
+        location.replace("#!game");
       });
     }
-  }, (err) => {
-    alert("Error: " + err.data);
-    location.replace("#!game");
-  });
+  }
+
   $scope.getPlayerColour = (playerId) => {
     var fill = "#fff"
     if (playerId === 0) {
@@ -132,6 +171,24 @@ app.controller('gameController', ["$scope", "$firebaseArray","$routeParams","$ht
       "fill" : fill
     }
   }
+  $scope.getPlayerColourCode = (player) => {
+    console.log(player);
+    var colour = "#fff"
+    if (player.$id === "0") {
+      colour = "#F2AF29"
+    } else if ((player.$id === "1")) {
+      colour = "#8E2B33"
+    } else if ((player.$id === "2")) {
+      colour = "#000080"
+    } else if ((player.$id === "3")) {
+      colour = "#1d5712"
+    }
+    return {
+      "stroke": colour,
+      "color": colour
+    }
+  }
+
   $scope.placeable = (board, row, tile) => {
     if (row.$id == (board.length)-1) {
       return true;
@@ -146,7 +203,9 @@ app.controller('gameController', ["$scope", "$firebaseArray","$routeParams","$ht
   $scope.playTurn = (row, tile) => {
     var selectedRow = Number(row.$id);
     var selectedCollum = tile.id;
+    console.log("play Turn");
     if (Id === CurrentTurn) {
+      console.log("Equals");
       $http.get("https://us-central1-connex-a8ef2.cloudfunctions.net/playTurn?gameKey="+gameKey + "&row=" + selectedRow + "&column=" + selectedCollum + "&playerId=" + Id)
       .then((response) => {
         console.log(response);
